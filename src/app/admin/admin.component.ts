@@ -3,13 +3,14 @@ import { LieuComp } from '../models/lieu.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-lieu',
+  selector: 'app-admin',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './lieu.component.html',
-  styleUrl: './lieu.component.scss'
+  templateUrl: './admin.component.html',
+  styleUrl: './admin.component.scss'
 })
-export class LieuComponent{
+export class AdminComponent {
   @Input() lieu!: LieuComp;
 }
- 
+
+
