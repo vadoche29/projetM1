@@ -1,0 +1,29 @@
+.footer {
+	width : 100%;
+	background-color: #d61a1a;
+	padding: 10px;
+	color : white;
+	overflow: hidden;
+	font-family: "Lato", sans-serif;
+	font-size: 30px;
+
+	.nav-button {
+		color: black;
+		background-color: #ffffff;
+		box-sizing: border-box;
+		padding: 5px 10px;
+		border: none;
+		box-shadow: lightgray 3px 3px 7px;
+		margin-right: 20px;
+		outline: none;
+		font-style: italic;
+		font-size: 30px;
+		font-weight: 500;
+		border-radius: 50px;
+
+		&:active {
+			transform: translate(1px, 1px);
+			box-shadow: lightgray 0 0 5px;
+		}
+	}
+}
