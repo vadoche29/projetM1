@@ -1,9 +1,17 @@
 <div class="signaler-card">
 	<h2>Signaler un accident à :</h2>
 	<p id="box-title"></p>
-	<p>Précisez votre salle et/ou votre étage</p>
+	<p>Précisez votre salle</p>
 	<input type="text" name="salle" placeholder="Écrivez ici">
 	<p>Contexte (type d'accident, âge et sexe de la victime, récurrence, ...)</p>
 	<textarea name="contexte" rows="5" placeholder="Toute information importante"></textarea>
+	<p>Quel est votre nom ? </p>
+	<input type="text" name="nom" placeholder="Écrivez ici">
+	<p>Quel est votre prénom ? </p>
+	<input type="text" name="prénom" placeholder="Écrivez ici">
+	<p>Quel est votre numéro de téléphone ? </p>
+	<input type="text" name="tel" placeholder="Écrivez ici">
 </div>
+<button class="button" (click)="signaler()">Signaler</button>
+
 	

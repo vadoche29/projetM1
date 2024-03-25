@@ -1,31 +1,36 @@
-<h1 *ngIf="data">SST actuellement présents sur site : {{ data.length }}</h1>
+<div *ngIf="sites && sites.length > 0">
+  <h1 *ngIf="getNumberOfSST(getRouteVille()) > 0">Nombre de SST présents sur le site {{ lieu?.title }} : {{ getNumberOfSST(getRouteVille()) }}</h1>
+  <h1 *ngIf="getNumberOfSST(getRouteVille()) === 0">AUCUN SST !!!</h1>
+</div>
+
+
 
 
 <div class="container">
   <div class="table">
     <div class="table-header">
-      <div class="header__item"><a id="id_portable" class="filter__link" href="#">ID PORTABLE</a></div>
       <div class="header__item"><a id="id_sst" class="filter__link filter__link--number" href="#">ID SST</a></div>
       <div class="header__item"><a id="nom" class="filter__link filter__link--number" href="#">NOM</a></div>
       <div class="header__item"><a id="prenom" class="filter__link filter__link--number" href="#">PRENOM</a></div>
-	  <div class="header__item"><a id="sexe" class="filter__link filter__link--number" href="#">SEXE</a></div>
-	  <div class="header__item"><a id="age" class="filter__link filter__link--number" href="#">AGE</a></div>
+	    <div class="header__item"><a id="portable" class="filter__link filter__link--number" href="#">PORTABLE</a></div>
+      <div class="header__item"><a id="site_ref" class="filter__link filter__link--number" href="#">SITE DE RÉFÉRENCE</a></div>
     </div>
     <div class="table-content">  
-      <div class="table-row" *ngFor="let item of data">
-        <div class="table-data">ID PORTABLE</div>
-        <div class="table-data">{{ item.id }}</div>
-        <div class="table-data">{{ item.nom }}</div>
-        <div class="table-data">{{ item.prenom }}</div>
-		<div class="table-data">{{ item.sexe }}</div>
-		<div class="table-data">{{ item.age }}</div>
+      <div class="table-row" *ngFor="let item of filteredData">
+        <ng-container *ngIf="item.site === getRouteVille()">
+          <div class="table-data">{{ item.id_sst }}</div>
+          <div class="table-data">{{ item.nom }}</div>
+          <div class="table-data">{{ item.prenom }}</div>
+          <div class="table-data">{{ item.numero_tel }}</div>
+          <div class="table-data">{{ item.site }}</div>
+        </ng-container>
       </div>
     </div>
   </div>
 </div>
 
 <div class="container-bouton">
-  <a href="javascript:history.back()" class="button_back">
+  <a href="javascript:history.back()" class="button_back" onclick="window.location.reload()">
     <i class="fa-arrow-left"></i>
     <span>Retour à la page précédente</span>
   </a>

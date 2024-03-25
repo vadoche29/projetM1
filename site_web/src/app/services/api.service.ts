@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, catchError } from 'rxjs';
+import { Observable, throwError, catchError, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +11,51 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getAllData(): Observable<any[]> {
+  getAllSst(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/sst`)
       .pipe(
         catchError(this.handleError)
       );
   }
+  
 
   getAllSite(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/site`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getAllIncident(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/incident`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getAllSstIncident(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/sst-incident`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }  
+
+  getAllSstSite(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/sst-site`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }  
+
+  getAllEtat(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/etat`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  } 
+
+  createIncident(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/incident`, data)
       .pipe(
         catchError(this.handleError)
       );

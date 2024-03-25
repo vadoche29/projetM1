@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LieuService } from '../services/lieu.service';
 import { LieuComponent } from '../lieu/lieu.component';
 import { AdminComponent } from '../admin/admin.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-admin',
@@ -15,10 +16,11 @@ import { AdminComponent } from '../admin/admin.component';
 export class ListAdminComponent {
   lieux!: LieuComp[]; 
 
-  constructor(private lieuService: LieuService) {
+  constructor(private lieuService: LieuService, private router: Router) {
   }
 
   ngOnInit(){
     this.lieux = this.lieuService.lieux;
   }
+
 }
