@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Site, SST, Incident, Etat, SST_Incident, SST_Site
+from .models import Site, SST, Incident, Etat, SST_Incident, SST_Site, Authentication
 
 class SiteSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,3 +30,8 @@ class SST_SiteSerializer(serializers.ModelSerializer):
     class Meta:
         model = SST_Site
         fields = '__all__'
+
+class AuthenticationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Authentication
+        fields = ['email', 'password']

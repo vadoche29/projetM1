@@ -1,0 +1,14 @@
+/* app.component.scss */
+:host {
+    display: block;
+    max-width: 100%; /* Ajuste la largeur maximale selon tes préférences */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9; /* Couleur de fond */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
+}
+
+.content {
+    margin-top: 3%; /* Espacement entre le header et le contenu */
+	margin-bottom: 5%;
+}

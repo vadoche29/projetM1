@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, catchError, map } from 'rxjs';
+import { Observable, throwError, catchError, map, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,12 @@ import { Observable, throwError, catchError, map } from 'rxjs';
 
 export class ApiService {
   private apiUrl = 'http://10.10.64.10:8000/api';
+
+  private dataSubject = new BehaviorSubject<any[]>([]);
+  data$ = this.dataSubject.asObservable();
+
+  private dataSstSiteSubject = new BehaviorSubject<any[]>([]);
+  dataSstSite$ = this.dataSstSiteSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 

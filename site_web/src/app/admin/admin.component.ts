@@ -5,6 +5,7 @@ import { ApiService } from '../services/api.service';
 import { LieuService } from '../services/lieu.service';
 import { LieuComponent } from '../lieu/lieu.component';
 import { Router } from '@angular/router';
+import { Observable, interval, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
@@ -17,6 +18,7 @@ export class AdminComponent {
   @Input() lieu!: LieuComp;
 
   data!: any[];
+  data_sst_site!: any[];
 
   constructor(private apiService: ApiService,
               private lieuService: LieuService,
@@ -24,13 +26,27 @@ export class AdminComponent {
 
   ngOnInit() {
     this.loadData(); 
+
+    // Actualiser les données toutes les minutes
+    /*interval(120000).pipe(
+      switchMap(() => this.apiService.getAllSst())
+    ).subscribe(data => {
+      this.data = data;
+    });
+
+    interval(600000).pipe(
+      switchMap(() => this.apiService.getAllSstSite())
+    ).subscribe(data_sst_site => {
+      this.data_sst_site = data_sst_site;
+    });*/
   }
 
   loadData(): void {
     this.apiService.getAllSst().subscribe(data => {
-      //console.log("la data la",data);
-      this.data = data;
-    });
+      this.data = data;});
+
+    this.apiService.getAllSstSite().subscribe(data_sst_site => {
+      this.data_sst_site = data_sst_site;});
   }
 
   redirectToDataPage(): void {
@@ -59,7 +75,19 @@ export class AdminComponent {
     let counter = 0;
     if (this.data) {
       this.data.forEach(sst => {
-        if (sst.site === site_ISEN) {
+        if (sst.site.toLowerCase() === site_ISEN) {
+          counter++;
+        }
+      });
+    }
+    return counter;
+  }
+
+  getPresenceOfSST(site_ISEN: string): number {
+    let counter = 0;
+    if (this.data_sst_site) {
+      this.data_sst_site.forEach(sst_site => {
+        if (sst_site.site_isen.toLowerCase() === site_ISEN) {
           counter++;
         }
       });

@@ -2,8 +2,8 @@
 	<h2>{{ lieu.title }}</h2>
 	<img [src]="lieu.image_url" [alt]="lieu.title">
 	<p>Présence {{ lieu.date | date: 'le dd/MM/yy, à HH:mm'}}</p>
-	<p>Nombre de SST présents sur site : {{ getNumberOfSST(lieu.ville) }}</p>
-	<p>Nombre de SST recensés : {{ lieu.nb_sst_totaux }}</p>
+	<p>Nombre de SST présents sur site : {{ getPresenceOfSST(lieu.ville) }}</p>
+	<p>Nombre de SST recensés : {{ getNumberOfSST(lieu.ville) }}</p>
 	<button class = "signaler-button" (click)="redirectToSignalerPage()">Signaler un accident</button>
 </div>
 

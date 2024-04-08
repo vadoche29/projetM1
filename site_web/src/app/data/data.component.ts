@@ -4,6 +4,7 @@ import { CommonModule, DOCUMENT } from '@angular/common';
 import { LieuService } from '../services/lieu.service';
 import { ActivatedRoute } from '@angular/router';
 import { LieuComp } from '../models/lieu.model';
+import { AuthService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-data',
@@ -20,11 +21,13 @@ export class DataComponent implements OnInit{
   lieu: LieuComp | undefined; 
   title: string = '';
   headingContent: string = '';
+  presenceOfSST: number = 0;
 
   constructor(private apiService: ApiService, 
               private route: ActivatedRoute, 
               private lieuService: LieuService,
-              @Inject(DOCUMENT) private document: Document) { }
+              @Inject(DOCUMENT) private document: Document,
+              private authService : AuthService) { }
 
   ngOnInit(): void {
     const lieuId = this.route.snapshot.params['ville'];
@@ -38,14 +41,18 @@ export class DataComponent implements OnInit{
   }  
 
   loadData(): void {
-    this.apiService.getAllSst().subscribe(data => {
-      //console.log(data);
-      this.data = data;
-      this.filteredData = this.data.filter(sst => sst.site === this.getRouteVille());
+    this.apiService.getAllSstSite().subscribe(sstSiteData => {
+      // Récupérer les données de sst_site
+      const sstIds = sstSiteData.map(item => item.id_sst);
+
+      this.apiService.getAllSst().subscribe(sstData => {
+        // Filtrer les données de sst en fonction des SST présents sur le site
+        this.filteredData = sstData.filter(sst => sstIds.includes(sst.id_sst) && sst.site.toLowerCase() === this.getRouteVille());
+        this.presenceOfSST = this.getPresenceOfSST(this.getRouteVille());
+      });
     });
 
     this.apiService.getAllSite().subscribe(sites => {
-      //console.log(sites);
       this.sites = sites;
       this.updateTitleFromUrlVille();
     })
@@ -60,15 +67,19 @@ export class DataComponent implements OnInit{
     }
   }
 
-  getNumberOfSST(site_ISEN: string): number {
+  getPresenceOfSST(site_ISEN: string): number {
     let counter = 0;
-    if (this.data) {
-      this.data.forEach(sst => {
-        if (sst.site === site_ISEN) {
+    if (this.filteredData) {
+      this.filteredData.forEach(sst => {
+        if (sst.site.toLowerCase() === site_ISEN) {
           counter++;
         }
       });
     }
     return counter;
+  }
+
+  Unlog(){
+    this.authService.logout();
   }
 }

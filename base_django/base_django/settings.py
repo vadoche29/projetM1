@@ -54,11 +54,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
+CORS_ORIGIN_WHITELIST = [
     'http://localhost:4200',
 ]
 
 ROOT_URLCONF = 'base_django.urls'
+
+SECRET_KEY = 'dc33a2f5b28b46cd8d1d0c76e5af86917467bc97aa82fac42026adea365e60d2abab631b10442edfc3245828af5ef2d538eb8e06e3990f78d750e413017709f5'
 
 TEMPLATES = [
     {

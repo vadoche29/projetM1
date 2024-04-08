@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
 
 
 const routes: Routes = [
-  {path: 'lieux', component: ListComponent},
+  {path: 'lieux', component: ListComponent}
 ];
 
 @NgModule({

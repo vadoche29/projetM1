@@ -7,31 +7,31 @@ import { LieuComp } from "../models/lieu.model";
 
 export class LieuService {
 	lieux : LieuComp[] =  [ {id : 1,
-	ville: 'Brest',
+	ville: 'brest',
 	title: 'Isen de Brest',
 	date: new Date(),
 	image_url: 'https://isen-brest.fr/wp-content/uploads/2016/09/ecole-ingenieur-brest-400x300.jpg',
 	nb_sst_totaux : 0
 	},
 	{id : 2,
-	ville: 'Nantes',
+	ville: 'nantes',
 	title: 'Isen de Nantes',
 	date: new Date(),
 	image_url: 'https://isen-nantes.fr/wp-content/uploads/2023/04/WEB-vignette-nantes.jpg',
 	nb_sst_totaux : 0
 	},
 	{id : 3,
-	ville: 'Caen',
+	ville: 'caen',
 	title: 'Isen de Caen',
 	date: new Date(),
 	image_url: 'https://isen-caen.fr/wp-content/uploads/2023/12/WEB-vignette-nantes.jpg',
 	nb_sst_totaux : 0
 	},
 	{id : 4,
-	ville: 'Rennes',
+	ville: 'rennes',
 	title: 'Isen de Rennes',
 	date: new Date(),
-	image_url: 'https://www.isen.fr/wp-content/uploads/2016/09/ISEN-Rennes_SB.jpg',
+	image_url: 'https://isen-rennes.fr/wp-content/uploads/2022/11/WEB-vignette-ISENrennes3.jpg',
 	nb_sst_totaux : 0
 	}
 	];

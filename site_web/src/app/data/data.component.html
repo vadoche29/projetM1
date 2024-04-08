@@ -1,23 +1,32 @@
-<div *ngIf="sites && sites.length > 0">
-  <h1 *ngIf="getNumberOfSST(getRouteVille()) > 0">Nombre de SST présents sur le site {{ lieu?.title }} : {{ getNumberOfSST(getRouteVille()) }}</h1>
-  <h1 *ngIf="getNumberOfSST(getRouteVille()) === 0">AUCUN SST !!!</h1>
+<div class="logout-container">
+  <button (click)="Unlog()" class="logout-button">Déconnexion</button>
+  <img src="logout.png" alt="Logo de déconnexion" class="logout-icon">
 </div>
 
+<div *ngIf="sites && sites.length > 0">
+  <h1 *ngIf="presenceOfSST > 0">Nombre de SST présents sur le site {{ lieu?.title }} : {{ presenceOfSST }}</h1>
+  <h1 *ngIf="presenceOfSST === 0">AUCUN SST !!!</h1>
+</div>
 
+<div class="container" *ngIf="presenceOfSST === 0">
+  <div class="alerte">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/OOjs_UI_icon_alert-destructive.svg" alt="Alarme">
+    <p>AUCUN SST PRESENT, MERCI DE CONTACTER LE SAMU EN COMPOSANT LE 15</p>
+  </div>
+</div>
 
-
-<div class="container">
+<div class="container" *ngIf="presenceOfSST !== 0">
   <div class="table">
     <div class="table-header">
       <div class="header__item"><a id="id_sst" class="filter__link filter__link--number" href="#">ID SST</a></div>
       <div class="header__item"><a id="nom" class="filter__link filter__link--number" href="#">NOM</a></div>
       <div class="header__item"><a id="prenom" class="filter__link filter__link--number" href="#">PRENOM</a></div>
-	    <div class="header__item"><a id="portable" class="filter__link filter__link--number" href="#">PORTABLE</a></div>
+      <div class="header__item"><a id="portable" class="filter__link filter__link--number" href="#">PORTABLE</a></div>
       <div class="header__item"><a id="site_ref" class="filter__link filter__link--number" href="#">SITE DE RÉFÉRENCE</a></div>
     </div>
     <div class="table-content">  
       <div class="table-row" *ngFor="let item of filteredData">
-        <ng-container *ngIf="item.site === getRouteVille()">
+        <ng-container *ngIf="item.site.toLowerCase() === getRouteVille()">
           <div class="table-data">{{ item.id_sst }}</div>
           <div class="table-data">{{ item.nom }}</div>
           <div class="table-data">{{ item.prenom }}</div>

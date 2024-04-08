@@ -41,3 +41,7 @@ class SST_Site(models.Model):
     id_sst = models.ForeignKey(SST, on_delete=models.CASCADE)
     date_arrivee = models.DateTimeField(null=True)
     date_depart = models.DateTimeField(null=True)
+
+class Authentication(models.Model):
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=200)
