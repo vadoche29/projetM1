@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from '../services/notification';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -16,7 +17,8 @@ export class SignalerComponent {
 
   constructor(private apiService: ApiService,
               private route : ActivatedRoute,
-              private notificationService : NotificationService) {}
+              private notificationService : NotificationService,
+              private router : Router) {}
 
   getRouteVille(): string {
     return this.route.snapshot.params['ville'];
@@ -50,6 +52,8 @@ export class SignalerComponent {
       (response) => {
         console.log('Incident signalé avec succès:', response);
 
+        const incidentId = response.id_incident;
+
       // Personnalisation de la notification
       const title = salle;
       const body =  contexte;
@@ -61,11 +65,13 @@ export class SignalerComponent {
         nom: nom,
         prenom: prenom,
         tel: tel,
+        incident_id: incidentId.toString(),
         notification_type : "alarm"
       };
 
       // Envoi de la notification avec les données personnalisées
-      this.notificationService.envoyerNotification(title, body, topic, infoSupplementaires);
+      this.notificationService.envoyerNotification(title, body, topic, infoSupplementaires);      
+      this.router.navigate(['/incident', incidentId]);
         
       },
       (error) => {
@@ -74,7 +80,6 @@ export class SignalerComponent {
     );
     // Réinitialiser les champs du formulaire après avoir signalé l'incident avec succès
     this.resetForm();
-
 }
 
 resetForm() {

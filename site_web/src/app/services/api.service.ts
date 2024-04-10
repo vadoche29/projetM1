@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, catchError, map, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { SstIncidentResponse } from '../models/sst-incident.model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,8 +41,8 @@ export class ApiService {
       );
   }
 
-  getAllSstIncident(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/sst-incident`)
+  getAllSstIncident(incidentId : number): Observable<any[]> {
+    return this.http.get<SstIncidentResponse[]>(`${this.apiUrl}/sst-incident/${incidentId}`)
       .pipe(
         catchError(this.handleError)
       );

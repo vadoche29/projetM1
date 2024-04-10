@@ -33,7 +33,7 @@ class SST_Incident(models.Model):
     id_sst = models.ForeignKey(SST, on_delete=models.CASCADE)
     id_incident = models.ForeignKey(Incident, on_delete=models.CASCADE)
     etat = models.ForeignKey(Etat, on_delete=models.CASCADE)
-    intervenant1 = models.BooleanField(null=True)
+    intervenant1 = models.CharField(max_length=100)
     heure_etat = models.DateTimeField()
 
 class SST_Site(models.Model):

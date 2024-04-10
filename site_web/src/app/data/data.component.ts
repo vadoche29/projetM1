@@ -17,6 +17,7 @@ export class DataComponent implements OnInit{
 
   data!: any[];
   sites!: any[]; 
+  data_sst_site!: any[];
   filteredData!: any[];
   lieu: LieuComp | undefined; 
   title: string = '';
@@ -43,13 +44,15 @@ export class DataComponent implements OnInit{
   loadData(): void {
     this.apiService.getAllSstSite().subscribe(sstSiteData => {
       // Récupérer les données de sst_site
-      const sstIds = sstSiteData.map(item => item.id_sst);
+      const sstIds = sstSiteData.filter(item => !item.date_depart && item.site_isen.toLowerCase() === this.getRouteVille().toLowerCase()).map(item => item.id_sst);
+      console.log('Identifiants de SST :', sstIds);
 
       this.apiService.getAllSst().subscribe(sstData => {
         // Filtrer les données de sst en fonction des SST présents sur le site
-        this.filteredData = sstData.filter(sst => sstIds.includes(sst.id_sst) && sst.site.toLowerCase() === this.getRouteVille());
+        this.filteredData = sstData.filter(sst => sstIds.includes(sst.id_sst));        
         this.presenceOfSST = this.getPresenceOfSST(this.getRouteVille());
       });
+      
     });
 
     this.apiService.getAllSite().subscribe(sites => {
@@ -70,6 +73,7 @@ export class DataComponent implements OnInit{
   getPresenceOfSST(site_ISEN: string): number {
     let counter = 0;
     if (this.filteredData) {
+      console.log('Données filtrées :', this.filteredData);
       this.filteredData.forEach(sst => {
         if (sst.site.toLowerCase() === site_ISEN) {
           counter++;

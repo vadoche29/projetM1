@@ -26,19 +26,6 @@ export class AdminComponent {
 
   ngOnInit() {
     this.loadData(); 
-
-    // Actualiser les données toutes les minutes
-    /*interval(120000).pipe(
-      switchMap(() => this.apiService.getAllSst())
-    ).subscribe(data => {
-      this.data = data;
-    });
-
-    interval(600000).pipe(
-      switchMap(() => this.apiService.getAllSstSite())
-    ).subscribe(data_sst_site => {
-      this.data_sst_site = data_sst_site;
-    });*/
   }
 
   loadData(): void {
@@ -46,14 +33,14 @@ export class AdminComponent {
       this.data = data;});
 
     this.apiService.getAllSstSite().subscribe(data_sst_site => {
-      this.data_sst_site = data_sst_site;});
+      this.data_sst_site = data_sst_site.filter(sst => !sst.date_depart);});
   }
 
   redirectToDataPage(): void {
     if (this.lieu && this.lieu.ville){
       this.router.navigate(['/data', this.lieu.ville]).then(() => {
         window.location.reload();
-      }); // Naviguez vers la page data/:ville avec l'ID du lieu
+      }); 
     }
     else {
       console.error("Lieu ou son ID non défini");

@@ -4,7 +4,7 @@ import { DOCUMENT } from '@angular/common';
 
 export const AuthGuard: CanActivateFn = (route, state) => {
   const localStorage = inject(DOCUMENT).defaultView?.localStorage;
-  if (localStorage && localStorage.getItem('token')!=='undefined') {
+  if (localStorage && localStorage.getItem('token')!=='undefined' && localStorage.getItem('token')!== '') {
     console.log('User is authenticated');
     return true;
   } else {    

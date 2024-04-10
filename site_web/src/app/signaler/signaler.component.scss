@@ -58,3 +58,31 @@
 		background-color: #cc0000;
 	}
 }
+
+.container-bouton {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+  }
+  
+  .button_back {
+	display: inline-block;
+	text-decoration: none;
+	cursor: pointer;
+	font-weight: 700;
+	border-radius: 4px;
+	border: 1px solid #1772FF;
+	padding: 8px 12px;
+	color: #1772FF;
+	background-color: #fff;
+	transition: all 0.3s ease;
+  }
+  
+  .button_back:hover {
+	background-color: #1772FF;
+	color: #fff;
+  }
+  
+  .fa-arrow-left::before {
+	content: "\2190";
+  }

@@ -31,21 +31,13 @@ app.use(bodyParser.json());
 
 // Envoyer une notification
 app.post('/envoyer-notification', (req, res) => {
-  const title = req.body.title;
-  const body = req.body.body;
   const topic = req.body.topic;
   const infoSupplementaires = req.body.infoSupplementaires;
-  console.log(title,body);
 
 
   const data = {
     message: {
       topic: topic,
-      notification: {
-        title: `Notification pour la salle ${title}`,
-        body: `Contexte : ${body}`,
-        //sound : "default",
-      },
       data: infoSupplementaires,
     },
   };

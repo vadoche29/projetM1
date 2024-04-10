@@ -6,6 +6,7 @@ import { ListAdminComponent } from './list-admin/list-admin.component';
 import { DataComponent } from './data/data.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
+import { IncidentDetailComponent } from './incident-detail/incident-detail.component';
 
 export const routes: Routes = [
 {path: 'lieux', component: ListComponent},
@@ -13,4 +14,5 @@ export const routes: Routes = [
 {path: '', component: LandingPageComponent},
 {path: 'page-admin', component: ListAdminComponent, canActivate: [AuthGuard]},
 {path: 'data/:ville', component: DataComponent, canActivate: [AuthGuard]},
-{path: 'login', component: LoginComponent},];
+{path: 'login', component: LoginComponent},
+{path: 'incident/:id', component: IncidentDetailComponent}];

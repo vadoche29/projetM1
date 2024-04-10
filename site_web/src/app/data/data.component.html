@@ -1,6 +1,6 @@
 <div class="logout-container">
+  <img src="/assets/logout.png" alt="Logo de déconnexion" class="logout-icon">
   <button (click)="Unlog()" class="logout-button">Déconnexion</button>
-  <img src="logout.png" alt="Logo de déconnexion" class="logout-icon">
 </div>
 
 <div *ngIf="sites && sites.length > 0">
@@ -10,7 +10,7 @@
 
 <div class="container" *ngIf="presenceOfSST === 0">
   <div class="alerte">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/OOjs_UI_icon_alert-destructive.svg" alt="Alarme">
+    <img src="/assets/alerte.png" alt="Alarme">
     <p>AUCUN SST PRESENT, MERCI DE CONTACTER LE SAMU EN COMPOSANT LE 15</p>
   </div>
 </div>

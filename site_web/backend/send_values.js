@@ -1,6 +1,7 @@
 const axios = require('axios');
 const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccountKey.json');
+const moment = require('moment-timezone');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -31,37 +32,51 @@ async function getIdSst(id_firebase) {
     }
 }
 
-// Ajoutez ce code à votre script pour écouter les modifications de la base de données Firebase
 firebaseRef.on('value', async (snapshot) => {
     const firebaseData = snapshot.val();
     const promises = [];
 
     Object.keys(firebaseData).forEach(async id_firebase => {
         const firebaseItem = firebaseData[id_firebase];
-        if (firebaseItem.presence === "non") {
-            // Si la valeur de présence est "non", supprimez l'entrée correspondante dans la table sst_site
-            promises.push(deleteFromSstSite(id_firebase));
+        if (firebaseItem.presence === "sorti") {
+            // Si la valeur de présence est "sorti", mettez à jour la date de départ
+            promises.push(updateDepartureDate(id_firebase));
+            console.log("Presence is sorti for id_firebase:", id_firebase);
         }
     });
 
     await Promise.all(promises);
 });
 
-async function deleteFromSstSite(id_firebase) {
+
+async function updateDepartureDate(id_firebase) {
     try {
         const id_sst = await getIdSst(id_firebase);
         if (id_sst !== null) {
-            await axios.delete(`${sstSiteAPIUrl}/delete-by-sst-id/${id_sst}`);
-            console.log(`SST with id_sst ${id_sst} deleted from sst_site table.`);
+            // Récupérer les données de la base de données sst-site
+            const response = await axios.get(sstSiteAPIUrl);
+            const sstSiteData = response.data;
+
+            // Rechercher l'enregistrement correspondant à id_sst dans la base de données
+            const sstRecord = sstSiteData.find(record => record.id_sst === id_sst);
+            if (sstRecord) {
+                const sstId = sstRecord.id; // Récupérer l'id correspondant
+                const updatedData = {
+                    date_depart: moment().format('YYYY-MM-DD HH:mm:ss')
+                };
+                await axios.put(`${sstSiteAPIUrl}/update-departure-date/${sstId}`, updatedData);
+                console.log(`Departure date updated for SST with id_sst ${id_sst} and id ${sstId}.`);
+            } else {
+                console.error('No corresponding record found for id_sst:', id_sst);
+            }
         } else {
             console.error('No corresponding SST ID found for id_firebase:', id_firebase);
         }
     } catch (error) {
-        console.error('Error deleting data from sst_site:', error);
+        console.error('Error updating departure date:', error);
         throw error;
     }
 }
-
 
 async function checkAndAddData() {
     try {
@@ -141,7 +156,7 @@ async function checkAndAddData() {
                     }
             }
 
-            if (firebaseItem.presence === "oui") {
+            if (firebaseItem.presence !== "sorti") {
                 //console.log("Presence is oui for id_firebase:", id_firebase);
                 
                 promises.push(new Promise(async (resolve, reject) => {
@@ -155,14 +170,25 @@ async function checkAndAddData() {
                             const sstSiteData = response.data;
                             
                             if (sstSiteData.find(item => item.id_sst === id_sst)) {
-                                //console.log('Data already exists in geo_notification_sst_site for id_firebase:', id_firebase);
-                                return;
+                                console.log('Data already exists in geo_notification_sst_site for id_firebase:', id_firebase);
+
+                                const sstRecord = sstSiteData.find(record => record.id_sst === id_sst);
+                                if (sstRecord) {
+                                    const sstId = sstRecord.id; // Récupérer l'id correspondant
+                                    const updatedData = {
+                                        site_isen: firebaseItem.presence,
+                                        date_arrivee: new Date().toISOString(),
+                                        date_depart: null
+                                    };
+                                    await axios.put(`${sstSiteAPIUrl}/update-departure-date/${sstId}`, updatedData);
+                                    console.log(`Arrival date updated for SST with id_sst ${id_sst}.`);
+                                }
                             }
 
                             else {
                                 const geoNotificationData = {
                                 id_sst: id_sst,
-                                site_isen: firebaseItem.site,
+                                site_isen: firebaseItem.presence,
                                 date_arrivee: new Date().toISOString()};
 
                                 await axios.post(sstSiteAPIUrl, geoNotificationData);

@@ -60,11 +60,18 @@ def getDataEtat(request):
     serialized_data = EtatSerializer(etat_data, many=True)
     return Response(serialized_data.data)
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def getDataSSTIncident(request):
-    sst_incident_data = SST_Incident.objects.all()
-    serialized_data = SST_IncidentSerializer(sst_incident_data, many=True)
-    return Response(serialized_data.data)
+    if request.method == 'GET':
+        sst_incident_data = SST_Incident.objects.all()
+        serialized_data = SST_IncidentSerializer(sst_incident_data, many=True)
+        return Response(serialized_data.data)
+    elif request.method == 'POST':
+        serializer = SST_IncidentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST'])
 def getDataSSTSite(request):
@@ -87,6 +94,20 @@ def deleteSSTSiteBySSTId(request, id_sst):
         return Response(status=status.HTTP_204_NO_CONTENT)
     except SST_Site.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET', 'PUT', 'PATCH'])
+def updateSSTSite(request, pk):
+    try:
+        sst_site_instance = SST_Site.objects.get(pk=pk)
+    except SST_Site.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT' or request.method == 'PATCH':
+        serializer = SST_SiteSerializer(sst_site_instance, data=request.data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])          
