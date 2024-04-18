@@ -213,6 +213,6 @@ async function checkAndAddData() {
 }
 
 checkAndAddData();
-setInterval(checkAndAddData, 60000);
+setInterval(checkAndAddData, 30000);
 
 

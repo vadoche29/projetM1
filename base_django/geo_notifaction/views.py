@@ -61,9 +61,9 @@ def getDataEtat(request):
     return Response(serialized_data.data)
 
 @api_view(['GET', 'POST'])
-def getDataSSTIncident(request):
+def getDataSSTIncident(request, id_incident):
     if request.method == 'GET':
-        sst_incident_data = SST_Incident.objects.all()
+        sst_incident_data = SST_Incident.objects.filter(id_incident=id_incident)
         serialized_data = SST_IncidentSerializer(sst_incident_data, many=True)
         return Response(serialized_data.data)
     elif request.method == 'POST':

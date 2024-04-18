@@ -1,5 +1,19 @@
-<form (ngSubmit)="onSubmit()">
-	<input type="email" [(ngModel)]="email" name="email" required>
-	<input type="password" [(ngModel)]="password" name="password" required>
-	<button type="submit">Login</button>
-</form>
+<div class="wrapper">
+	<div class="login-text">
+	  <button class="cta" #ctaButton (click)="toggleLoginForm()"><i class="fas fa-chevron-down fa-1x"></i></button>
+	  <div class="text" [ngClass]="{'show-login': showLoginForm}">
+		<a href="">Login</a>
+		<hr>
+		<br>
+		<input type="email" [(ngModel)]="email" name="email" required placeholder="E-mail">
+		<br>
+		<input type="password" [(ngModel)]="password" name="password" required placeholder="Mot de passe">
+		<br>
+		<button class="login-btn" type="submit" (click)="onSubmit()">Log In</button>
+	  </div>
+	</div>
+	<div class="call-text">
+	  <h1>Vous devez être <span>connecté </span> pour accéder à cet interface</h1>
+	  <h2>Déroulez la page</h2>
+	</div>
+</div>

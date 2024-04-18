@@ -1,11 +1,4 @@
-.page-content {
-	background-color: #ffffff;
-	padding: 40px;
-	font-family: 'Source Sans Pro', sans-serif;
-  }
-
-  
-  .container {
+.container {
 	max-width: 100%;
 	margin: 0 auto;
 	display: flex;
@@ -18,7 +11,7 @@
 	color: red;
 	font-size: 200%;
   }	
-  
+
   .alerte img {
 	display: block;
 	margin: 0 auto;
@@ -53,37 +46,6 @@
 	content: "\2190";
   }
   
-  .table {
-	width: 70%;
-	border: 1px solid #EEEEEE;
-  }
-  
-  .table-header {
-	display: flex;
-	width: 100%;
-	background: #000;
-	padding: 18px 0;
-  }
-  
-  .table-row {
-	display: flex;
-	width: 100%;
-	padding: 18px 0;
-	&:nth-of-type(odd) {
-	  background: #EEEEEE;
-	}
-  }
-  
-  .table-data, .header__item {
-	flex: 1 1 100%;
-	text-align: center;
-	font-size: 40px;
-  }
-  
-  .header__item {
-	text-transform: uppercase;
-  }
-  
   .filter__link {
 	color: white;
 	text-decoration: none;
@@ -105,28 +67,4 @@
 	&.asc::after {
 	  content: '(asc)';
 	}
-  }
-
-  
-.logout-container {
-	position: absolute;
-	margin-top: 3.5%;
-	top: 20px;
-	right: 20px;
-	display: flex;
-	align-items: center;
-  }
-  
-  .logout-button {
-	background-color: #f44336;
-	color: white;
-	border: none;
-	padding: 10px 20px;
-	cursor: pointer;
-	margin-left: 10px;
-  }
-  
-  .logout-icon {
-	width: 60px;
-	height: 60px;
   }

@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 app.post('/envoyer-notification', (req, res) => {
   const topic = req.body.topic;
   const infoSupplementaires = req.body.infoSupplementaires;
-
+  console.log('Topic:', topic);
 
   const data = {
     message: {

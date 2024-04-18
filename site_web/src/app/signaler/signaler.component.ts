@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ApiService } from '../services/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from '../services/notification';
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-signaler',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './signaler.component.html',
   styleUrl: './signaler.component.scss'
 })

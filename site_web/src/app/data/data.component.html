@@ -26,7 +26,7 @@
     </div>
     <div class="table-content">  
       <div class="table-row" *ngFor="let item of filteredData">
-        <ng-container *ngIf="item.site.toLowerCase() === getRouteVille()">
+        <ng-container>
           <div class="table-data">{{ item.id_sst }}</div>
           <div class="table-data">{{ item.nom }}</div>
           <div class="table-data">{{ item.prenom }}</div>

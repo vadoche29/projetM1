@@ -5,4 +5,6 @@ export class LieuComp {
 	date !: Date; 
 	nb_sst_totaux !: number;
 	image_url !: string;
+	presenceSST !: number;
+	totalSST !: number;
 	}

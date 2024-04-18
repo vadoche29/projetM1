@@ -11,10 +11,13 @@ import { SstIncidentResponse } from '../models/sst-incident.model';
   templateUrl: './incident-detail.component.html',
   styleUrl: './incident-detail.component.scss'
 })
-export class IncidentDetailComponent {
+export class IncidentDetailComponent{
 
   incidentId!: number;
-  intervenant!: string;
+  id_sst!: number;
+  sstData: any[] = []; 
+  filteredData: any[] = [];
+
 
   constructor(private apiService: ApiService,
               private route : ActivatedRoute) {}
@@ -29,10 +32,24 @@ export class IncidentDetailComponent {
   getIntervenant() {
     this.apiService.getAllSstIncident(this.incidentId).subscribe(
       (response: SstIncidentResponse[]) => {
-        if (response.length > 0 && response[0].intervenant1) {
-          this.intervenant = response[0].intervenant1;
+        if (response.length > 0 && response[0].id_sst) {
+
+          this.id_sst = response[0].id_sst;
+          console.log('Identifiant de l\'intervenant:', this.id_sst);
+
+          this.apiService.getAllSst().subscribe(sstData => {
+            this.sstData = sstData;
+
+            this.filteredData = this.sstData.filter(sst => sst.id_sst === this.id_sst);       
+            console.log(this.filteredData);
+          });
+
         } else {
-          this.intervenant = 'Aucun SST n\'a répondu, merci de patienter.';
+          console.log('Aucun SST n\'a répondu, merci de patienter.');
+          // Rafraîchir la page toutes les 10 secondes
+          setInterval(() => {
+            this.getIntervenant();
+          }, 10000); // 10 secondes en millisecondes
         }
       },
       (error) => {

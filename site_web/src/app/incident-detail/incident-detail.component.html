@@ -1,3 +1,20 @@
-<div *ngIf="intervenant">{{ intervenant }}</div>
-<div *ngIf="!intervenant">{{ intervenant }}</div>
-
+<div *ngIf="filteredData.length > 0" class="container">
+	<h2>Informations sur le SST qui va intervenir :</h2>
+	<table class="table">
+	  <tr>
+		<th>Nom</th>
+		<th>Prénom</th>
+		<th>Numéro de téléphone</th>
+	  </tr>
+	  <tr>
+		<td>{{ filteredData[0].nom }}</td>
+		<td>{{ filteredData[0].prenom }}</td>
+		<td>{{ filteredData[0].numero_tel }}</td>
+	  </tr>
+	</table>
+  </div>
+  
+  <div *ngIf="filteredData.length === 0" class="container_empty">
+	<p>Aucune information trouvée pour cet incident.</p>
+  </div>
+  

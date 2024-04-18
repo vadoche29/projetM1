@@ -1,0 +1,7 @@
+/lieux
+/signaler/:ville
+/''
+/page-admin
+/data/:ville
+/login
+/incident/:id

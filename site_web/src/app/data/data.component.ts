@@ -5,6 +5,7 @@ import { LieuService } from '../services/lieu.service';
 import { ActivatedRoute } from '@angular/router';
 import { LieuComp } from '../models/lieu.model';
 import { AuthService } from '../services/authentication.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-data',
@@ -49,10 +50,11 @@ export class DataComponent implements OnInit{
 
       this.apiService.getAllSst().subscribe(sstData => {
         // Filtrer les données de sst en fonction des SST présents sur le site
-        this.filteredData = sstData.filter(sst => sstIds.includes(sst.id_sst));        
+        this.filteredData = sstData.filter(sst => sstIds.includes(sst.id_sst)); 
+        //console.log('Données filtrées :', this.filteredData);       
         this.presenceOfSST = this.getPresenceOfSST(this.getRouteVille());
-      });
-      
+        console.log("presence : ",this.presenceOfSST);
+      });     
     });
 
     this.apiService.getAllSite().subscribe(sites => {
@@ -73,11 +75,11 @@ export class DataComponent implements OnInit{
   getPresenceOfSST(site_ISEN: string): number {
     let counter = 0;
     if (this.filteredData) {
-      console.log('Données filtrées :', this.filteredData);
+      //console.log('Données filtrées :', this.filteredData);
       this.filteredData.forEach(sst => {
-        if (sst.site.toLowerCase() === site_ISEN) {
-          counter++;
-        }
+        console.log(this.filteredData);
+        console.log(sst.site);
+        counter++;
       });
     }
     return counter;

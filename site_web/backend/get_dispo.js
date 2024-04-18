@@ -14,7 +14,7 @@ const sstIncidentAPIUrl = 'http://10.10.64.10:8000/api/sst-incident';
 async function addToSSTIncident(incidentId, idSst, intervenant1) {
     try {
         // Vérifier si l'identifiant de l'incident existe déjà dans la base de données sst-incident
-        const existingIncidentsResponse = await axios.get(`${sstIncidentAPIUrl}?id_incident=${incidentId}`);
+        const existingIncidentsResponse = await axios.get(`${sstIncidentAPIUrl}/${incidentId}`);
         const existingIncidents = existingIncidentsResponse.data;
 
         if (existingIncidents.length === 0) {
@@ -31,7 +31,7 @@ async function addToSSTIncident(incidentId, idSst, intervenant1) {
             };
 
             // Envoi de la requête POST pour ajouter les nouvelles données à la base de données sst-incident
-            const response = await axios.post(sstIncidentAPIUrl, newData);
+            const response = await axios.post(`${sstIncidentAPIUrl}/${incidentId}`, newData);
             console.log('Nouvelle instance ajoutée à la base de données sst-incident:', response.data);
         } else {
             console.log(`L'identifiant de l'incident ${incidentId} existe déjà dans la base de données sst-incident. Pas besoin d'ajouter une nouvelle instance.`);
@@ -87,4 +87,4 @@ async function fetchData() {
 }
 
 fetchData();
-setInterval(fetchData, 60000); // Récupérer toutes les minutes
+setInterval(fetchData, 30000); // Récupérer toutes les minutes
