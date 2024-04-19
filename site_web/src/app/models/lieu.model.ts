@@ -8,3 +8,7 @@ export class LieuComp {
 	presenceSST !: number;
 	totalSST !: number;
 	}
+
+/*
+Définition des attributs attendus pour un lieu
+*/

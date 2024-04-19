@@ -29,6 +29,7 @@ export class IncidentDetailComponent{
     });
   }
 
+  // Récupération de l'intervenant ayant répondu à l'incident en cliquant sur le bouton disponible
   getIntervenant() {
     this.apiService.getAllSstIncident(this.incidentId).subscribe(
       (response: SstIncidentResponse[]) => {

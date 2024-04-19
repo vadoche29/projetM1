@@ -1,6 +1,11 @@
 from django.urls import path
 from . import views
 
+"""
+Ce programme permet de créer des urls pour les différentes vues de la base de données.
+Certaines URLs ne sont accessibles que selon certains critères.
+"""
+
 urlpatterns = [
     path('api/site', views.getDataSite),
     path('api/sst', views.getDataSST),

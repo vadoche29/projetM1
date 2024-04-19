@@ -10,6 +10,8 @@ export class NotificationService {
 
   constructor(private http: HttpClient) { }
 
+  //Envoi de notifications à l'URL de l'API backend NodeJS
+
   envoyerNotification(title: string, body: string, topic: string, infoSupplementaires : any = {}): void {
     // Appel HTTP POST à notre API backend pour envoyer la notification
     this.http.post<any>(`${this.apiUrl}/envoyer-notification`, {title, body, topic, infoSupplementaires})

@@ -33,25 +33,25 @@ export class DataComponent implements OnInit{
 
   ngOnInit(): void {
     const lieuId = this.route.snapshot.params['ville'];
-    //console.log('Identifiant du lieu dans ngOnInit() :', lieuId); // Ajoutez cette ligne
     this.loadData();
     this.lieu = this.lieuService.getLieuByVille(lieuId);
   }
 
+  // Récupération du nom de la ville dans l'URL
   getRouteVille(): string {
     return this.route.snapshot.params['ville'];
   }  
 
+  // Chargement des données depuis les bases concernées grâce au fichier de service
   loadData(): void {
     this.apiService.getAllSstSite().subscribe(sstSiteData => {
-      // Récupérer les données de sst_site
+      // Récupérer les données de sst_site si le site correspond
       const sstIds = sstSiteData.filter(item => !item.date_depart && item.site_isen.toLowerCase() === this.getRouteVille().toLowerCase()).map(item => item.id_sst);
       console.log('Identifiants de SST :', sstIds);
 
       this.apiService.getAllSst().subscribe(sstData => {
         // Filtrer les données de sst en fonction des SST présents sur le site
-        this.filteredData = sstData.filter(sst => sstIds.includes(sst.id_sst)); 
-        //console.log('Données filtrées :', this.filteredData);       
+        this.filteredData = sstData.filter(sst => sstIds.includes(sst.id_sst));   
         this.presenceOfSST = this.getPresenceOfSST(this.getRouteVille());
         console.log("presence : ",this.presenceOfSST);
       });     
@@ -72,10 +72,10 @@ export class DataComponent implements OnInit{
     }
   }
 
+  // Fonction pour récupérer le nombre de SST présents sur un site donné, ainsi que leurs infos
   getPresenceOfSST(site_ISEN: string): number {
     let counter = 0;
     if (this.filteredData) {
-      //console.log('Données filtrées :', this.filteredData);
       this.filteredData.forEach(sst => {
         console.log(this.filteredData);
         console.log(sst.site);

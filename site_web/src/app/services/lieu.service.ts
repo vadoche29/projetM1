@@ -5,6 +5,7 @@ import { LieuComp } from "../models/lieu.model";
 	providedIn: 'root'
 })
 
+// Définition des sites ISEN accessibles
 export class LieuService {
 	lieux : LieuComp[] =  [ {id : 1,
 	ville: 'brest',

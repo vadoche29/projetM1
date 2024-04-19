@@ -11,6 +11,7 @@ import { SstIncidentResponse } from '../models/sst-incident.model';
 export class ApiService {
   private apiUrl = 'http://10.10.64.10:8000/api';
 
+  // BehaviorSubject pour stocker les données SST et les données du site SST
   private dataSubject = new BehaviorSubject<any[]>([]);
   data$ = this.dataSubject.asObservable();
 
@@ -18,6 +19,8 @@ export class ApiService {
   dataSstSite$ = this.dataSstSiteSubject.asObservable();
 
   constructor(private http: HttpClient) { }
+
+  // Définition des méthodes pour interagir avec les URLs Django, selon les critères attendus
 
   getAllSst(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/sst`)

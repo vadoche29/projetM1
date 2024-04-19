@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccountKey.json');
 const moment = require('moment-timezone');
 
+// Initialisation de l'application Firebase Admin avec les informations d'authentification
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://notif-65177-default-rtdb.europe-west1.firebasedatabase.app"
@@ -15,6 +16,7 @@ const sstSiteAPIUrl = 'http://10.10.64.10:8000/api/sst-site';
 // Fonction pour récupérer l'identifiant SST correspondant à partir de la base de données SST
 async function getIdSst(id_firebase) {
     try {
+        // Récupération des données depuis l'API Django 
         const response = await axios.get(djangoAPIUrl);
         const sstData = response.data;
         
@@ -32,6 +34,7 @@ async function getIdSst(id_firebase) {
     }
 }
 
+// Écouteur d'événement sur les changements dans la base de données Firebase
 firebaseRef.on('value', async (snapshot) => {
     const firebaseData = snapshot.val();
     const promises = [];
@@ -48,7 +51,7 @@ firebaseRef.on('value', async (snapshot) => {
     await Promise.all(promises);
 });
 
-
+//Mise à jour de la date de départ dans la base de données SST
 async function updateDepartureDate(id_firebase) {
     try {
         const id_sst = await getIdSst(id_firebase);
@@ -78,6 +81,7 @@ async function updateDepartureDate(id_firebase) {
     }
 }
 
+// Fonction principale pour vérifier les données et les ajouter à la base de données Django
 async function checkAndAddData() {
     try {
         const [djangoResponse, firebaseSnapshot] = await Promise.all([
@@ -90,20 +94,18 @@ async function checkAndAddData() {
         const djangoData = djangoResponse.data;
         const firebaseData = firebaseSnapshot.val();
 
-        //console.log("Firebase data:", firebaseData);
-
         const promises = [];
 
+        //Parcours des données FireBase
         Object.keys(firebaseData).forEach(async id_firebase => {
-            //console.log("Processing id_firebase:", id_firebase);
             
             const firebaseItem = firebaseData[id_firebase];
             const matchingDjangoData = djangoData.find(item => item.id_firebase === id_firebase);
-            //console.log("Presence:", firebaseItem.presence);
 
             if (!matchingDjangoData) {
                 console.log("Data not found in Django for id_firebase:", id_firebase);
 
+                //Données à envoyer à l'API Django
                 const mappedData = {
                     id_firebase: id_firebase,
                     nom: firebaseItem.nom,
@@ -156,13 +158,12 @@ async function checkAndAddData() {
                     }
             }
 
+            //Gestion des données de présence 
             if (firebaseItem.presence !== "sorti") {
-                //console.log("Presence is oui for id_firebase:", id_firebase);
                 
                 promises.push(new Promise(async (resolve, reject) => {
                     try {
                         const id_sst = await getIdSst(id_firebase);
-                        //console.log("id_sst for id_firebase:", id_firebase, "is:", id_sst);
                         
                         if (id_sst !== null) {
 
@@ -213,6 +214,6 @@ async function checkAndAddData() {
 }
 
 checkAndAddData();
-setInterval(checkAndAddData, 30000);
+setInterval(checkAndAddData, 30000);//Actualisation toutes les 30 secondes
 
 

@@ -6,6 +6,10 @@ from rest_framework import status, generics
 from .models import Site, SST, Incident, Etat, SST_Incident, SST_Site, Authentication
 from .serializers import SSTSerializer, SiteSerializer, IncidentSerializer, EtatSerializer, SST_IncidentSerializer, SST_SiteSerializer, AuthenticationSerializer
 
+"""
+Ce programme permet de créer des vues pour les différentes tables de la base de données. 
+Les vues permettent de récupérer les données de la base de données, de les modifier et de les supprimer.
+"""
 
 @api_view(['GET','POST'])
 def getDataSST(request):

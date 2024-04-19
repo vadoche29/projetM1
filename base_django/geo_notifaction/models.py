@@ -1,5 +1,10 @@
 from django.db import models
 
+"""
+Ce programme permet de créer les différentes tables de la base de données.
+Les attributs des tables sont définis par des champs, basés sur le code SQL de la BDD. 
+"""
+
 class Site(models.Model):
     site_isen = models.CharField(max_length=50, primary_key=True)
     x = models.FloatField()

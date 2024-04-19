@@ -10,6 +10,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  //appel de la fonction login avec les paramètres email et password
+  //Création d'un token dans le local storage si connexion OK
   login(email: string, password: string) {
     return this.http.post(this.loginUrl, {email, password}).subscribe(
       (response: any) => {

@@ -1,4 +1,4 @@
 export interface SstIncidentResponse {
-    intervenant1: string; // Ajoutez d'autres propriétés si nécessaire
+    intervenant1: string; 
 	id_sst: number;
 }

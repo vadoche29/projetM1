@@ -43,6 +43,7 @@ app.post('/envoyer-notification', (req, res) => {
   };
 
   console.log(data.message.data);
+  // Utilisation de l'API d'envoi de messages Firebase Cloud Messaging pour envoyer une notification
   messaging.send(data.message)
     .then(function(response) {
       console.log('Successfully sent message:', response);
